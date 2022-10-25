@@ -48,6 +48,18 @@ public class Theater {
                 System.out.println(s.getSequenceOfTheDay() + ": " + s.getStartTime() + " " + s.getMovie().getTitle() + " " + humanReadableFormat(s.getMovie().getRunningTime()) + " $" + s.getMovieFee())
         );
         System.out.println("===================================================");
+        /*
+        JSON:
+        {
+            {
+                "sequenceNumber": 1,
+                "startTime": 2022-10-25T09:00,
+                "movieTitle": "Spider-Man: No Way Home",
+                "runningTime": s.getMovie.getRunningTime,
+                "movieFee": 12.5
+            }
+        }
+         */
     }
 
     public String humanReadableFormat(Duration duration) {
