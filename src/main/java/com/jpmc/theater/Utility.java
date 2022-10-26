@@ -10,8 +10,8 @@ public class Utility {
     private static LocalDateProvider provider = LocalDateProvider.singleton();
 
     static boolean isEligibleForTimeDiscount(LocalDateTime showStartTime) {
-        return showStartTime.isAfter(LocalDateTime.of(provider.currentDate(), LocalTime.of(10, 59, 59, 59)))
-                && showStartTime.isBefore(LocalDateTime.of(provider.currentDate(), LocalTime.of(16, 0)));
+        return (showStartTime.isBefore(LocalDateTime.of(provider.currentDate(), LocalTime.of(16, 0, 0, 1)))
+                && showStartTime.isAfter(LocalDateTime.of(provider.currentDate().minusDays(1) , LocalTime.of(10, 59, 59, 59))));
     }
 
     static boolean isEligibleForDayDiscount(LocalDateTime showStartTime) {

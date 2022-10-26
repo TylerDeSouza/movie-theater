@@ -16,8 +16,6 @@ public class Movie {
     private double ticketPrice;
     private int specialCode;
 
-    public Movie(){}
-
     public Movie(String title, String description, Duration runningTime, double ticketPrice, int specialCode) {
         this.title = title;
         this.description = description;
@@ -49,7 +47,7 @@ public class Movie {
             discount = Math.max(discount, ticketPrice * TWENTY_PERCENT_DISCOUNT);  // 20% discount for special movie
         }
 
-        if(isEligibleForTimeDiscount(showing.getStartTime())) {
+        if(Utility.isEligibleForTimeDiscount(showing.getStartTime())) {
             discount = Math.max(discount, ticketPrice * TWENTY_FIVE_PERCENT_DISCOUNT);  // 25% discount for movie between 11am-4pm
         }
 

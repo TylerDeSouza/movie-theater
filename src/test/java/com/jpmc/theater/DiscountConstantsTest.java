@@ -11,7 +11,7 @@ class DiscountConstantsTest {
     void checkEquality() {
         assertEquals(MOVIE_CODE_SPECIAL, 1);
         assertEquals(SEQUENCE_ONE, 1);
-        assertEquals(SEQUENCE_TWO, 1);
+        assertEquals(SEQUENCE_TWO, 2);
         assertEquals(SEVENTH_DAY_OF_MONTH, 7);
 
         assertEquals(TWENTY_PERCENT_DISCOUNT, 0.2);

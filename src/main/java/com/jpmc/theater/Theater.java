@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 /*
 TODO:
-- Mocking provider?
-- Unit test hash code/equals?
-- Unit test main method?
+- Mocking provider/Time?
+- Making static singleton in Utility class?
+
 - Safe way to round double price?
 - Public empty Movie constructor needed?
+- Unit test hash code/equals?
+- Unit test main method?
 - Clean up imports/dependencies/warnings
  */
 public class Theater {
