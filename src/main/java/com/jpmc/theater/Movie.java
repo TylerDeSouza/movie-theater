@@ -1,12 +1,11 @@
 package com.jpmc.theater;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Objects;
 
 import static com.jpmc.theater.DiscountConstants.*;
-import static com.jpmc.theater.Utility.*;
+import static com.jpmc.theater.Utility.isEligibleForDayDiscount;
+import static com.jpmc.theater.Utility.isEligibleForSpecialCodeDiscount;
 
 public class Movie {
 
@@ -61,7 +60,7 @@ public class Movie {
             discount = Math.max(discount, SEQUENCE_TWO_DISCOUNT); // $2 discount for 2nd show
         }
 
-        return discount;
+        return Math.round(discount * 100.0)/100.0;
     }
 
     @Override

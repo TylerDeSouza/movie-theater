@@ -31,12 +31,8 @@ public class TheaterTests {
     }
 
     @Test
-    void throwIllegalStateExceptionException() {
+    void throwIllegalStateException() {
         assertThrows(IllegalStateException.class, () -> theater.reserve(john, 10, 4));
     }
 
-    @Test
-    void runMain() throws JsonProcessingException {
-        Theater.main(new String[]{});
-    }
 }

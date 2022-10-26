@@ -4,30 +4,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.io.DataInput;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-/*
-TODO:
-- Mocking provider/Time?
-- Making static singleton in Utility class?
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-- Safe way to round double price?
-- Public empty Movie constructor needed?
-- Unit test hash code/equals?
-- Unit test main method?
-- Clean up imports/dependencies/warnings
- */
 public class Theater {
 
     LocalDateProvider provider;
     private final List<Showing> schedule;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger LOGGER = Logger.getLogger(Theater.class.getName());
 
     public Theater(LocalDateProvider provider) {
         this.provider = provider;
@@ -99,8 +89,12 @@ public class Theater {
         }
     }
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args)  {
         Theater theater = new Theater(LocalDateProvider.singleton());
-        theater.printSchedule();
+        try {
+            theater.printSchedule();
+        } catch (JsonProcessingException ex) {
+            LOGGER.log(Level.SEVERE, "JsonProcessingException occurred in printSchedule", ex);
+        }
     }
 }

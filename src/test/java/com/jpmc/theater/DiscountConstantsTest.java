@@ -3,7 +3,7 @@ package com.jpmc.theater;
 import org.junit.jupiter.api.Test;
 
 import static com.jpmc.theater.DiscountConstants.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiscountConstantsTest {
 
