@@ -59,9 +59,9 @@ public class MovieTests {
     @Test
     void specialMovieDiscountFirstShowing() {
         LocalDateTime time = LocalDateTime.of(2022, 10,8, 10, 0);
-        Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),16.0, 1);
         Showing showing = new Showing(spiderMan, 1, time);
-        assertEquals(11.0, spiderMan.calculateTicketPrice(showing));
+        assertEquals(12.8, spiderMan.calculateTicketPrice(showing));
     }
 
     //Case: Second movie of the day discount < Special movie discount
@@ -101,7 +101,6 @@ public class MovieTests {
         assertNotEquals(spiderMan, turningRed);
         assertNotEquals(spiderMan.hashCode(), turningRed.hashCode());
         assertNotEquals(spiderMan, showing);
-        assertFalse(spiderMan.equals(null));
     }
 
     @Test
