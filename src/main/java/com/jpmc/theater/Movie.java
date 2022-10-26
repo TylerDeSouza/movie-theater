@@ -6,8 +6,7 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 public class Movie {
-    private static int MOVIE_CODE_SPECIAL1 = 1;
-    private static int MOVIE_CODE_SPECIAL2 = 2;
+    private static int MOVIE_CODE_SPECIAL = 1;
 
     private String title;
     private String description;
@@ -42,29 +41,31 @@ public class Movie {
     }
 
     private double getDiscount(int showSequence, LocalDateTime showStartTime) {
-        double specialDiscount = 0;
-        if (MOVIE_CODE_SPECIAL1 == specialCode) {
-            specialDiscount = ticketPrice * 0.2;  // 20% discount for special movie
+        double discount = 0;
+        if (specialCode == MOVIE_CODE_SPECIAL) {
+            discount = Math.max(discount, ticketPrice * 0.2);  // 20% discount for special movie
         }
 
-        if(showStartTime.isAfter(LocalDateTime.of(provider.currentDate(), LocalTime.of(10, 59, 59, 59))) && showStartTime.isBefore(LocalDateTime.of(provider.currentDate(), LocalTime.of(16, 0)))) {
-            specialDiscount = ticketPrice * 0.25;  // 25% discount for movie between 11am-4pm
+        if(isEligibleForTimeDiscount(showStartTime)) {
+            discount = Math.max(discount, ticketPrice * 0.25);  // 25% discount for movie between 11am-4pm
         }
 
-        double dayDiscount = 0;
         if(provider.currentDate().getDayOfMonth() == 7) {
-            dayDiscount = 1;
+            discount = Math.max(discount, 1);
         }
 
-        double sequenceDiscount = 0;
         if (showSequence == 1) {
-            sequenceDiscount = 3; // $3 discount for 1st show
+            discount = Math.max(discount, 3); // $3 discount for 1st show
         } else if (showSequence == 2) {
-            sequenceDiscount = 2; // $2 discount for 2nd show
+            discount = Math.max(discount, 2); // $2 discount for 2nd show
         }
 
-        // biggest discount wins
-        return Math.max(dayDiscount, Math.max(specialDiscount, sequenceDiscount));
+        return discount;
+    }
+
+    private boolean isEligibleForTimeDiscount(LocalDateTime showStartTime) {
+        return showStartTime.isAfter(LocalDateTime.of(provider.currentDate(), LocalTime.of(10, 59, 59, 59)))
+                && showStartTime.isBefore(LocalDateTime.of(provider.currentDate(), LocalTime.of(16, 0)));
     }
 
     @Override
