@@ -39,4 +39,8 @@ public class TheaterTests {
     void sequenceNotFoundException() {
         assertThrows(IllegalStateException.class, () -> theater.reserve(john, 10, 4));
     }
+    @Test
+    void runMain() throws JsonProcessingException {
+        Theater.main(new String[]{});
+    }
 }

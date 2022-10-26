@@ -12,12 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShowingTests {
 
-    private Movie spiderMan;
     private Showing showing;
 
     @BeforeEach
     void setUp() {
-        spiderMan = new Movie("Spider-Man: No Way Home","a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90), 14.0, 1);
         showing = new Showing(spiderMan, 1, LocalDateTime.of(LocalDate.now(), LocalTime.now()));
     }
 

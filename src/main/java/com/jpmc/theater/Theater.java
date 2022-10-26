@@ -16,8 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class Theater {
 
     LocalDateProvider provider;
-    private List<Showing> schedule;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final List<Showing> schedule;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Theater(LocalDateProvider provider) {
         this.provider = provider;
