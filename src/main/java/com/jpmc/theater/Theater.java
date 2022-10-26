@@ -12,7 +12,15 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+/*
+TODO:
+- Mocking provider?
+- Unit test hash code/equals?
+- Unit test main method?
+- Safe way to round double price?
+- Public empty Movie constructor needed?
+- Clean up imports/dependencies/warnings
+ */
 public class Theater {
 
     LocalDateProvider provider;

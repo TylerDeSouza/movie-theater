@@ -4,11 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,9 +31,10 @@ public class TheaterTests {
     }
 
     @Test
-    void sequenceNotFoundException() {
+    void throwIllegalStateExceptionException() {
         assertThrows(IllegalStateException.class, () -> theater.reserve(john, 10, 4));
     }
+
     @Test
     void runMain() throws JsonProcessingException {
         Theater.main(new String[]{});

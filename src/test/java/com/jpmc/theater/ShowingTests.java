@@ -17,7 +17,8 @@ class ShowingTests {
     @BeforeEach
     void setUp() {
         Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90), 14.0, 1);
-        showing = new Showing(spiderMan, 1, LocalDateTime.of(LocalDate.now(), LocalTime.now()));
+        LocalDateTime time = LocalDateTime.of(2022, 10,6, 10, 0);
+        showing = new Showing(spiderMan, 1, time);
     }
 
     @Test

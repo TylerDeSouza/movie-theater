@@ -5,15 +5,18 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import static com.jpmc.theater.DiscountConstants.*;
+import static com.jpmc.theater.Utility.*;
+
 public class Movie {
-    private static int MOVIE_CODE_SPECIAL = 1;
 
     private String title;
     private String description;
     private Duration runningTime;
     private double ticketPrice;
     private int specialCode;
-    private LocalDateProvider provider;
+
+    public Movie(){}
 
     public Movie(String title, String description, Duration runningTime, double ticketPrice, int specialCode) {
         this.title = title;
@@ -21,7 +24,6 @@ public class Movie {
         this.runningTime = runningTime;
         this.ticketPrice = ticketPrice;
         this.specialCode = specialCode;
-        this.provider = LocalDateProvider.singleton();
     }
 
     public String getTitle() {
@@ -37,35 +39,31 @@ public class Movie {
     }
 
     public double calculateTicketPrice(Showing showing) {
-        return ticketPrice - getDiscount(showing.getSequenceOfTheDay(), showing.getStartTime());
+        return ticketPrice - getDiscount(showing);
     }
 
-    private double getDiscount(int showSequence, LocalDateTime showStartTime) {
+    private double getDiscount(Showing showing) {
         double discount = 0;
-        if (specialCode == MOVIE_CODE_SPECIAL) {
-            discount = Math.max(discount, ticketPrice * 0.2);  // 20% discount for special movie
+
+        if (isEligibleForSpecialCodeDiscount(specialCode)) {
+            discount = Math.max(discount, ticketPrice * TWENTY_PERCENT_DISCOUNT);  // 20% discount for special movie
         }
 
-        if(isEligibleForTimeDiscount(showStartTime)) {
-            discount = Math.max(discount, ticketPrice * 0.25);  // 25% discount for movie between 11am-4pm
+        if(isEligibleForTimeDiscount(showing.getStartTime())) {
+            discount = Math.max(discount, ticketPrice * TWENTY_FIVE_PERCENT_DISCOUNT);  // 25% discount for movie between 11am-4pm
         }
 
-        if(provider.currentDate().getDayOfMonth() == 7) {
-            discount = Math.max(discount, 1);
+        if(isEligibleForDayDiscount(showing.getStartTime())) {
+            discount = Math.max(discount, SEVENTH_DAY_OF_MONTH_DISCOUNT);
         }
 
-        if (showSequence == 1) {
-            discount = Math.max(discount, 3); // $3 discount for 1st show
-        } else if (showSequence == 2) {
-            discount = Math.max(discount, 2); // $2 discount for 2nd show
+        if (showing.isSequence(SEQUENCE_ONE)) {
+            discount = Math.max(discount, SEQUENCE_ONE_DISCOUNT); // $3 discount for 1st show
+        } else if (showing.isSequence(SEQUENCE_TWO)) {
+            discount = Math.max(discount, SEQUENCE_TWO_DISCOUNT); // $2 discount for 2nd show
         }
 
         return discount;
-    }
-
-    private boolean isEligibleForTimeDiscount(LocalDateTime showStartTime) {
-        return showStartTime.isAfter(LocalDateTime.of(provider.currentDate(), LocalTime.of(10, 59, 59, 59)))
-                && showStartTime.isBefore(LocalDateTime.of(provider.currentDate(), LocalTime.of(16, 0)));
     }
 
     @Override
