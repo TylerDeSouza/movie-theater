@@ -1,8 +1,15 @@
 package com.jpmc.theater;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.DataInput;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -10,13 +17,14 @@ public class Theater {
 
     LocalDateProvider provider;
     private List<Showing> schedule;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public Theater(LocalDateProvider provider) {
         this.provider = provider;
 
-        Movie spiderMan = new Movie("Spider-Man: No Way Home", Duration.ofMinutes(90), 12.5, 1);
-        Movie turningRed = new Movie("Turning Red", Duration.ofMinutes(85), 11, 0);
-        Movie theBatMan = new Movie("The Batman", Duration.ofMinutes(95), 9, 0);
+        Movie spiderMan = new Movie("Spider-Man: No Way Home","a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90), 12.5, 1);
+        Movie turningRed = new Movie("Turning Red","a 2022 American computer-animated fantasy comedy film produced by Pixar Animation Studios", Duration.ofMinutes(85), 11, 0);
+        Movie theBatMan = new Movie("The Batman","a 2022 American superhero film based on the DC Comics character Batman", Duration.ofMinutes(95), 9, 0);
         schedule = List.of(
             new Showing(turningRed, 1, LocalDateTime.of(provider.currentDate(), LocalTime.of(9, 0))),
             new Showing(spiderMan, 2, LocalDateTime.of(provider.currentDate(), LocalTime.of(11, 0))),
@@ -41,25 +49,27 @@ public class Theater {
         return new Reservation(customer, showing, howManyTickets);
     }
 
-    public void printSchedule() {
+    public void printSchedule() throws JsonProcessingException {
         System.out.println(provider.currentDate());
         System.out.println("===================================================");
+        ObjectNode rootNode = objectMapper.createObjectNode();
         schedule.forEach(s ->
-                System.out.println(s.getSequenceOfTheDay() + ": " + s.getStartTime() + " " + s.getMovie().getTitle() + " " + humanReadableFormat(s.getMovie().getRunningTime()) + " $" + s.getMovieFee())
+                {
+                    System.out.println(s.getSequenceOfTheDay() + ": " + s.getStartTime() + " " + s.getMovie().getTitle() + " " + humanReadableFormat(s.getMovie().getRunningTime()) + " $" + s.getMovieFee());
+
+                    ObjectNode childNode = objectMapper.createObjectNode();
+                    childNode.put("startTime", String.valueOf(s.getStartTime()));
+                    childNode.put("movieTitle", s.getMovie().getTitle());
+                    childNode.put("runningTime", String.valueOf(s.getMovie().getRunningTime()));
+                    childNode.put("movieFee", s.getMovieFee());
+
+                    rootNode.set(String.valueOf(s.getSequenceOfTheDay()), childNode);
+
+                }
         );
+        String jsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+        System.out.println(jsonString);
         System.out.println("===================================================");
-        /*
-        JSON:
-        {
-            {
-                "sequenceNumber": 1,
-                "startTime": 2022-10-25T09:00,
-                "movieTitle": "Spider-Man: No Way Home",
-                "runningTime": s.getMovie.getRunningTime,
-                "movieFee": 12.5
-            }
-        }
-         */
     }
 
     public String humanReadableFormat(Duration duration) {
@@ -79,7 +89,7 @@ public class Theater {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
         Theater theater = new Theater(LocalDateProvider.singleton());
         theater.printSchedule();
     }

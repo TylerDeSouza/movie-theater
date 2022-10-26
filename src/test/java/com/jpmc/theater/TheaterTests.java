@@ -1,5 +1,6 @@
 package com.jpmc.theater;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +31,7 @@ public class TheaterTests {
     }
 
     @Test
-    void printMovieSchedule() {
+    void printMovieSchedule() throws JsonProcessingException {
         theater.printSchedule();
     }
 
