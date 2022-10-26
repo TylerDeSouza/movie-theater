@@ -10,8 +10,6 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MovieTests {
-    Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),12.5, 1);
-    Showing showing = new Showing(spiderMan, 5, LocalDateTime.of(LocalDate.now(), LocalTime.now()));
     @Test
     void specialMovieWith50PercentDiscount() {
         Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),12.5, 1);
@@ -80,25 +78,48 @@ public class MovieTests {
 
     @Test
     public void notEqualsTest() {
-        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
-        Movie spiderMan2 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 0);
-        Movie spiderMan3 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),13.0, 1);
-        Movie spiderMan4 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(95),14.0, 1);
-        Movie spiderMan5 = new Movie("Spider-Man: No Way Home", "a 2022 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
-        Movie spiderMan6 = new Movie("Spider-Man: Into the Spiderverse", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
-
+        Movie spiderMan = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
         Movie turningRed = new Movie("Turning Red","a 2022 American computer-animated fantasy comedy film produced by Pixar Animation Studios", Duration.ofMinutes(85), 11, 0);
+        Showing showing = new Showing(spiderMan, 5, LocalDateTime.of(LocalDate.now(), LocalTime.now()));
 
-        assertNotEquals(spiderMan1, turningRed);
-        assertNotEquals(spiderMan1, spiderMan2);
-        assertNotEquals(spiderMan1, spiderMan3);
-        assertNotEquals(spiderMan1, spiderMan4);
-        assertNotEquals(spiderMan1, spiderMan5);
-        assertNotEquals(spiderMan1, spiderMan6);
-        assertNotEquals(spiderMan1.hashCode(), turningRed.hashCode());
-        assertFalse(spiderMan.equals(showing));
-        assertFalse(spiderMan1.equals(turningRed));
-        assertFalse(spiderMan1.equals(null));
+        assertNotEquals(spiderMan, turningRed);
+        assertNotEquals(spiderMan.hashCode(), turningRed.hashCode());
+        assertNotEquals(spiderMan, showing);
+        assertFalse(spiderMan.equals(null));
     }
 
+    @Test
+    public void specialCodeNotEqualsTest() {
+        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan2 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 0);
+        assertNotEquals(spiderMan1, spiderMan2);
+    }
+
+    @Test
+    public void ticketPriceNotEqualsTest() {
+        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan2 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),13.0, 1);
+        assertNotEquals(spiderMan1, spiderMan2);
+    }
+
+    @Test
+    public void durationNotEqualsTest() {
+        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan2 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(95),14.0, 1);
+        assertNotEquals(spiderMan1, spiderMan2);
+    }
+
+    @Test
+    public void descriptionNotEqualsTest() {
+        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan2 = new Movie("Spider-Man: No Way Home", "a 2022 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        assertNotEquals(spiderMan1, spiderMan2);
+    }
+
+    @Test
+    public void titleNotEqualsTest() {
+        Movie spiderMan1 = new Movie("Spider-Man: No Way Home", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        Movie spiderMan2 = new Movie("Spider-Man: Into the Spiderverse", "a 2021 American superhero film based on the Marvel Comics character Spider-Man", Duration.ofMinutes(90),14.0, 1);
+        assertNotEquals(spiderMan1, spiderMan2);
+    }
 }

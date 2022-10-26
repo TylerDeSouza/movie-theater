@@ -39,5 +39,4 @@ public class TheaterTests {
     void sequenceNotFoundException() {
         assertThrows(IllegalStateException.class, () -> theater.reserve(john, 10, 4));
     }
-
 }
